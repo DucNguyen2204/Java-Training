@@ -1,0 +1,6 @@
+List of Candidate
+==========EXPERIENCE CANDIDATE==========
+Employee{ID=45613632, firstName='Duc', lastName='Nguyen', birthDate='1998', address='164 Khuat Duy Tien', phone='0382248998', email='nduc2204@gmail.com', type=0, count=0, listCertificate=[Certificate{CertificateId=40903189, certificateName='Dai hoc', certificateRank=Gioi, certificateDate='2020'}]} => Experience{expYear=2, proSkill='Java'}
+==========FRESHER CANDIDATE==========
+Employee{ID=64286051, firstName='Tu', lastName='Le', birthDate='1999', address='flhkdsafhjdklsa', phone='0912313214', email='jkfldasjfkads@gmail.com', type=1, count=0, listCertificate=[Certificate{CertificateId=61871038, certificateName='Dai hoc', certificateRank=Gioi, certificateDate='2021'}]} => Fresher{gradDate='2021', gradRank='Good', university='Bach Khoa'}
+==========INTERNSHIP CANDIDATE==========

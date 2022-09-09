@@ -51,8 +51,8 @@ public final class UtilityClass {
 
     public static void outPutEmployeesToFile() throws IOException {
         boolean result = Files.deleteIfExists(Path.of("employee_list.txt"));
-        try(Writer writer = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream("employee_list.txt"), "utf-8"))){
+        try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream("employee_list.txt"), "utf-8"))) {
 
             if (employees.size() > 0) {
                 writer.write("List of Candidate\n");
@@ -87,7 +87,7 @@ public final class UtilityClass {
                     }
                 });
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -166,10 +166,10 @@ public final class UtilityClass {
         }
     }
 
-    private static List<Certificate> addCertificate(){
+    private static List<Certificate> addCertificate() {
         List<Certificate> certificates = new ArrayList<>();
         String option = "";
-        while(!option.equalsIgnoreCase("n")) {
+        while (!option.equalsIgnoreCase("n")) {
             System.out.println("Please enter certificate name: ");
             String certificateName = scanner.nextLine();
             System.out.println("Please enter certificateRank: ");
@@ -203,32 +203,45 @@ public final class UtilityClass {
         String birthDate = null;
         String email = null;
         String phone = null;
-        while (!Validator.checkBirthDate(birthDate)) {
+        while (true) {
             System.out.println("Please enter your birth date: ");
             birthDate = scanner.nextLine();
-            if (Validator.checkBirthDate(birthDate)) answers.put("birthDate", birthDate);
-            else System.out.println("Invalid birth date");
+            try {
+                if (Validator.checkBirthDate(birthDate)) {
+                    answers.put("birthDate", birthDate);
+                    break;
+                }
+            } catch (BirthDayException e) {
+                System.err.println(e);
+            }
         }
         System.out.println("Please enter your address: ");
         String address = scanner.nextLine();
-        while(true){
+        while (true) {
             System.out.println("Please enter your phone number (starts with 03/09/06) : ");
             phone = scanner.nextLine();
-            try{
+            try {
                 if (Validator.checkPhone(phone)) {
                     answers.put("phone", phone);
                     break;
                 }
-            }catch (PhoneException e){
+            } catch (PhoneException e) {
                 System.err.println(e);
             }
         }
 
-        while (!Validator.checkEmail(email)) {
+        while (true) {
             System.out.println("Please enter your email: ");
             email = scanner.nextLine();
-            if (Validator.checkEmail(email)) answers.put("email", email);
-            else System.out.println("Invalid Email");
+            try {
+                if (Validator.checkEmail(email)) {
+                    answers.put("email", email);
+                    break;
+                }
+            } catch (EmailException e) {
+                System.err.println(e);
+            }
+
         }
 
         answers.put("firstName", firstName);
@@ -239,12 +252,12 @@ public final class UtilityClass {
     }
 
 
-    public static void updateEmployee(){
+    public static void updateEmployee() {
         scanner.nextLine();
         System.out.println("Please enter employee's id: ");
         long id = Long.parseLong(scanner.nextLine());
         Optional<Employee> e = employees.stream().filter(employee ->
-            employee.getID() == id).findAny();
+                employee.getID() == id).findAny();
         e.ifPresent(employee -> {
             System.out.println(employee.showInfo());
             System.out.println("Please enter options: ");
@@ -253,7 +266,7 @@ public final class UtilityClass {
             int option = scanner.nextInt();
             if (option == 1) {
                 employees.remove(employee);
-            }else if (option == 2){
+            } else if (option == 2) {
                 int choice = printUpdateMenu();
                 scanner.nextLine();
                 switch (choice) {
@@ -282,15 +295,15 @@ public final class UtilityClass {
 
                     case 4 -> {
                         String phone = null;
-                        while(true){
+                        while (true) {
                             System.out.println("Please enter your phone number: ");
                             phone = scanner.nextLine();
-                            try{
+                            try {
                                 if (Validator.checkPhone(phone)) {
                                     employee.setPhone(phone);
                                     break;
                                 }
-                            }catch (PhoneException ex){
+                            } catch (PhoneException ex) {
                                 System.err.println(ex);
                             }
                         }
@@ -305,7 +318,7 @@ public final class UtilityClass {
                         }
                     }
                 }
-                if (employee instanceof Experience){
+                if (employee instanceof Experience) {
                     int yearExp;
                     do {
                         System.out.println("Please enter year of experience (0-100): ");
@@ -316,7 +329,7 @@ public final class UtilityClass {
                     String proSkill = scanner.nextLine();
                     ((Experience) employee).setExpYear(yearExp);
                     ((Experience) employee).setProSkill(proSkill);
-                }else if (employee instanceof Fresher){
+                } else if (employee instanceof Fresher) {
                     System.out.println("Please enter your graduation date (year): ");
                     String gradDate = scanner.nextLine();
                     System.out.println("Please enter your university: ");
@@ -339,7 +352,7 @@ public final class UtilityClass {
                     } while (!Validator.checkRank(rankGrad));
                     ((Fresher) employee).setGradDate(gradDate);
                     ((Fresher) employee).setGradRank(rankGrad);
-                }else {
+                } else {
                     System.out.println("Please enter your major: ");
                     String major = scanner.nextLine();
                     System.out.println("Please enter your semester: ");
@@ -355,7 +368,7 @@ public final class UtilityClass {
         });
     }
 
-    private static int printUpdateMenu(){
+    private static int printUpdateMenu() {
         System.out.println("Please choose what you would like to update: ");
         System.out.printf(format, "", "1. Name");
         System.out.printf(format, "", "2. Birth Year");

@@ -13,10 +13,11 @@ public abstract class Employee {
     private String email;
     private int type;
 
-    private int count;
+    private static int count = 0;
 
     private List<employee_management.Certificate> listCertificate;
     public Employee(String firstName, String lastName, String birthDate, String address, String phone, String email, int type) {
+        this.count++;
         this.ID = this.IdGenerator();
         this.firstName = firstName;
         this.lastName = lastName;
